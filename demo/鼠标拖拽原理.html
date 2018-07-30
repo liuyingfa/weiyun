@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#div {
+				background: red;
+				position: absolute;
+				width: 100px;
+				height: 100px;
+				top: 50%;
+				left: 50%;
+			}
+			
+			.left {
+				float: left;
+				width: 10px;
+				height: 100%;
+				background: black;
+			}
+			
+			.rigt {
+				float: right;
+				height: 100%;
+				width: 10px;
+				background: black;
+			}
+		</style>
+		<script>
+			window.onload = function() {
+				var odiv = document.getElementById("div");
+				odiv.onmousedown = function(ev) {
+					var ev = ev || event;
+					var ob = "";
+					var oleft = ""; //当前div距离左边
+					var disW = this.offsetWidth;
+					var disX = ev.clientX;
+				    var disL=this.offsetLeft;
+					if(disX > this.offsetLeft + disW - 10) {
+						ob = "right";
+					}
+					if(disX < this.offsetLeft + 10) {
+						ob = "left";
+					}
+					document.onmousemove = function(ev) {
+						var ev = ev || event;
+
+						switch(ob) {
+							case "right":
+								odiv.style.width = disW + (ev.clientX - disX) + "px";
+								break;
+							case "left":
+							//鼠标移动距离
+                                odiv.style.width =disW - (ev.clientX -disX)+"px";
+                                odiv.style.left =disL+(ev.clientX -disX)+"px";
+								break;
+						}
+					}
+
+					document.onmouseup = function(ev) {
+						document.onmousemove = document.onmouserup = null;
+
+					}
+
+					return false;
+
+				}
+
+			}
+		</script>
+	</head>
+
+	<body>
+
+		<div id="div">
+			<div class="left"></div>
+			<div class="rigt"></div>
+		</div>
+	</body>
+
+</html>
